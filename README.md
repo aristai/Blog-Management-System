@@ -59,8 +59,7 @@ Inkspire is a modern, open‐source blog management tool built with **Next.js**,
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/inkspire.git
-   cd inkspire
+   git clone https://github.com/Leo-rq-yu/Blog-Management-System.git
    ```
 2. **Install dependencies**:
    ```bash
@@ -74,19 +73,27 @@ Inkspire is a modern, open‐source blog management tool built with **Next.js**,
 Create a `.env.local` file in the root directory (or `.env` if you prefer) and add the following variables:
 
 ```bash
-# PostgreSQL / Neon
-NEON_CONNECTION_STRING="postgres://username:password@your-neon-host/databasename"
+# Public domain for your application (e.g., https://yourdomain.com)
+NEXT_PUBLIC_DOMAIN=https://yourdomain.com
 
-# AWS S3
-AWS_REGION="us-east-1"
-AWS_ACCESS_KEY_ID="your-aws-access-key-id"
-AWS_SECRET_ACCESS_KEY="your-aws-secret-access-key"
-NEXT_PUBLIC_S3_BUCKET_NAME="your-bucket-name"
+# PostgreSQL connection string (e.g., postgres://username:password@host:port/database)
+DATABASE_URL=postgres://user:password@localhost:5432/yourdatabase
 
-# (Optional) Any other config for your environment
+# AWS S3 bucket configuration
+# The name of your S3 bucket where content will be stored
+NEXT_PUBLIC_S3_BUCKET_NAME=your-s3-bucket-name
+
+# AWS S3 region where your bucket is hosted (e.g., us-east-1)
+NEXT_PUBLIC_S3_REGION=us-east-1
+
+# Public URL for your S3 bucket (e.g., https://your-s3-bucket-name.s3.amazonaws.com)
+NEXT_PUBLIC_S3_URL=https://your-s3-bucket-name.s3.amazonaws.com
+
+# AWS credentials for accessing S3 (Keep these secret and add your .env file to .gitignore)
+AWS_ACCESS_KEY_ID=your-aws-access-key-id
+AWS_SECRET_ACCESS_KEY=your-aws-secret-access-key
+
 ```
-
-> Provide a `.env.example` file with placeholder values to help new contributors set up quickly.
 
 ### Running the App
 
@@ -141,10 +148,10 @@ Visit [http://localhost:3000](http://localhost:3000) to see the app.
 │  │  ├─ editor/
 │  │  │  └─ [id]/
 │  │  │     └─ page.tsx  # Editor page
-│  ├─ components/
-│  │  └─ TrackSave.tsx   # Example component
-│  ├─ lib/
-│  │  └─ db.ts           # DB connection logic
+│  ├─ components/        # Components
+│  ├─ lib/               # Types
+|  ├─ styles/            # Style sheets of preview and editor panes
+|  ├─ utils/             # Utility function & EditorJS configurations
 │  └─ ...
 ├─ public/
 │  └─ ...                # Static assets
@@ -167,8 +174,6 @@ Contributions are welcome! Please open an issue or submit a pull request:
 4. **Push** to the branch: `git push origin feature/my-feature`.  
 5. Open a **Pull Request**.
 
-For more details, see [CONTRIBUTING.md](CONTRIBUTING.md) (if you have one).
-
 ---
 
 ## License
@@ -183,6 +188,6 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 - [Tailwind CSS](https://tailwindcss.com/) for rapid UI styling.  
 - [Neon](https://neon.tech/) for hosting PostgreSQL.  
 - [AWS S3](https://aws.amazon.com/s3/) for content storage.  
-- [Editor.js](https://editorjs.io/) (or your chosen editor) for the core editing experience.
+- [Editor.js](https://editorjs.io/) for the core editing experience.
 
 Thank you for using **Inkspire**. Feel free to share feedback, report bugs, or suggest new features! Enjoy creating and managing your blogs.
