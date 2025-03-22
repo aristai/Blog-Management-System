@@ -1,7 +1,40 @@
+import { Metadata } from "next";
 import { BlogContentProvider } from "@/component/context/BlogContantContext";
 import EditorPageUI from "@/component/EditorPage/EditerPageUI";
 import EditorPageHeader from "@/component/EditorPage/header";
 import { type Blog, DEFAULT_BLOG } from "@/lib/blogType";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  // Fetch the blog data based on the blog id from URL parameters
+  const blogResponse = await fetch(
+    process.env.NEXT_PUBLIC_DOMAIN + `/api/blog/${id}`
+  );
+  const blog = await blogResponse.json();
+
+  // Create a dynamic title and description for SEO
+  return {
+    title: `${blog.title} | Inkspire`,
+    description: blog.description,
+    // Keywords can be an array or a comma-separated string; Next.js supports both.
+    keywords: blog.keywords,
+    openGraph: {
+      title: blog.title,
+      description: blog.description,
+      images: blog.cover_image_url ? [blog.cover_image_url] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.title,
+      description: blog.description,
+      images: blog.cover_image_url ? [blog.cover_image_url] : [],
+    },
+  };
+}
 
 export default async function EditorPage({
   params,
@@ -23,14 +56,16 @@ export default async function EditorPage({
     updated_at: "",
     published_at: null,
   };
-  
+
   if (id == "example") {
     blog = DEFAULT_BLOG;
   } else {
-    const blogResponse = await fetch(process.env.NEXT_PUBLIC_DOMAIN + `/api/blog/${id}`);
+    const blogResponse = await fetch(
+      process.env.NEXT_PUBLIC_DOMAIN + `/api/blog/${id}`
+    );
     blog = await blogResponse.json();
   }
-  
+
   console.log("data get from server");
   console.log(blog);
 

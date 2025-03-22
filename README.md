@@ -1,36 +1,188 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inkspire
+
+**Ignite Your Creativity with a Seamless Blog Management System**
+
+Inkspire is a modern, open‐source blog management tool built with **Next.js**, **TypeScript**, and **Tailwind CSS**. It provides a two-pane editor (write on the left, preview on the right), along with features like metadata management, S3-based content storage, and SEO-friendly pages.
+
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Environment Variables](#environment-variables)
+  - [Running the App](#running-the-app)
+- [Usage](#usage)
+  - [Creating a New Blog](#creating-a-new-blog)
+  - [Editing a Blog](#editing-a-blog)
+  - [Publishing a Blog](#publishing-a-blog)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+
+---
+
+## Features
+
+- **Two-Pane Editor**: Rich text or Markdown editor on the left, real-time preview on the right.  
+- **Metadata & SEO**: Store blog metadata (title, description, keywords) for better search engine visibility.  
+- **S3 Content Storage**: Keeps the heavy JSON content in AWS S3, while metadata resides in a PostgreSQL database (e.g., Neon).  
+- **Simple API**: CRUD endpoints for creating, reading, updating, and deleting blogs.  
+- **Responsive Design**: Tailwind CSS ensures a mobile-friendly layout.  
+- **Open Source**: Easily extend or integrate with your own authentication, DB, or additional features.
+
+---
+
+## Tech Stack
+
+- **Framework**: [Next.js 13](https://nextjs.org/docs/app) (App Router)  
+- **Language**: TypeScript  
+- **Styling**: Tailwind CSS  
+- **Database**: PostgreSQL (hosted on [Neon](https://neon.tech/))  
+- **Storage**: AWS S3 for blog content JSON  
+- **Editor**: Example uses Editor.js (or any Rich Text/Markdown editor of your choice)
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+1. **Node.js** (v16 or higher recommended)  
+2. **Yarn** or **npm** (whichever you prefer)  
+3. **PostgreSQL** database connection (Neon or local)  
+4. **AWS S3** bucket (or another storage solution)
+
+### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/inkspire.git
+   cd inkspire
+   ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory (or `.env` if you prefer) and add the following variables:
+
+```bash
+# PostgreSQL / Neon
+NEON_CONNECTION_STRING="postgres://username:password@your-neon-host/databasename"
+
+# AWS S3
+AWS_REGION="us-east-1"
+AWS_ACCESS_KEY_ID="your-aws-access-key-id"
+AWS_SECRET_ACCESS_KEY="your-aws-secret-access-key"
+NEXT_PUBLIC_S3_BUCKET_NAME="your-bucket-name"
+
+# (Optional) Any other config for your environment
+```
+
+> Provide a `.env.example` file with placeholder values to help new contributors set up quickly.
+
+### Running the App
+
+**Development mode**:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Usage
 
-## Learn More
+### Creating a New Blog
 
-To learn more about Next.js, take a look at the following resources:
+1. Go to the **Home** page (`/`).  
+2. Click **Create New Post** (or the “+” card).  
+3. Enter the **title**, **author**, **tag** (folder in S3), and optional **description** or **keywords**.  
+4. Once created, you’ll be redirected to the editor page.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Editing a Blog
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. In the **Home** page, select an existing blog to edit.  
+2. Use the left pane to modify content (Editor.js JSON).  
+3. The right pane updates in real-time to show a preview.  
+4. Update metadata (title, description, etc.) in the top toolbar.  
+5. Click **Save** to store changes (JSON uploaded to S3, metadata updated in DB).
 
-## Deploy on Vercel
+### Publishing a Blog
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. From the editor page, change **status** to `published` or click a **Publish** button.  
+2. The blog’s metadata updates in the DB with a `published_at` timestamp.  
+3. The published blog can be displayed on a public route if you integrate a front-facing page.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Project Structure
+
+```
+.
+├─ src/
+│  ├─ app/
+│  │  ├─ page.tsx        # Home / Dashboard
+│  │  ├─ layout.tsx      # Global layout (App Router)
+│  │  ├─ api/
+│  │  │  ├─ blogs/
+│  │  │  │  └─ route.ts  # API endpoints (GET/POST)
+│  │  │  └─ ...          # More routes
+│  │  ├─ editor/
+│  │  │  └─ [id]/
+│  │  │     └─ page.tsx  # Editor page
+│  ├─ components/
+│  │  └─ TrackSave.tsx   # Example component
+│  ├─ lib/
+│  │  └─ db.ts           # DB connection logic
+│  └─ ...
+├─ public/
+│  └─ ...                # Static assets
+├─ .env.example          # Example environment variables
+├─ README.md
+├─ LICENSE
+├─ package.json
+└─ ...
+```
+
+---
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request:
+
+1. **Fork** this repository.  
+2. Create a new branch: `git checkout -b feature/my-feature`.  
+3. Make your changes and **commit**: `git commit -m 'Add new feature'`.  
+4. **Push** to the branch: `git push origin feature/my-feature`.  
+5. Open a **Pull Request**.
+
+For more details, see [CONTRIBUTING.md](CONTRIBUTING.md) (if you have one).
+
+---
+
+## License
+
+This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Acknowledgments
+
+- [Next.js](https://nextjs.org/) for the React framework and App Router.  
+- [Tailwind CSS](https://tailwindcss.com/) for rapid UI styling.  
+- [Neon](https://neon.tech/) for hosting PostgreSQL.  
+- [AWS S3](https://aws.amazon.com/s3/) for content storage.  
+- [Editor.js](https://editorjs.io/) (or your chosen editor) for the core editing experience.
+
+Thank you for using **Inkspire**. Feel free to share feedback, report bugs, or suggest new features! Enjoy creating and managing your blogs.
