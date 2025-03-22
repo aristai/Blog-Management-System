@@ -58,6 +58,7 @@ const EditBlogForm = ({ closeModel, blog }: EditBlogFormProps) => {
         <Form
           form={form}
           layout="vertical"
+          onSubmitCapture={() => console.log("Submiting")}
           onFinish={handleSubmit}
           initialValues={{
             title: blog.title,
@@ -121,7 +122,12 @@ const EditBlogForm = ({ closeModel, blog }: EditBlogFormProps) => {
             <Input placeholder="Cover image URL for SEO" />
           </Form.Item>
           <Form.Item label={null}>
-            <Button type="primary" htmlType="submit" block>
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+              onClick={() => console.log("Submit")}
+            >
               Submit
             </Button>
           </Form.Item>

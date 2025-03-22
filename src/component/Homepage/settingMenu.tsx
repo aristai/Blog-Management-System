@@ -1,8 +1,6 @@
 "use client";
-import dynamic from "next/dynamic";
-const Modal = dynamic(() => import("antd").then((antd) => antd.Modal));
-const EditBlogForm = dynamic(() => import("./EditBlogForm"));
-import { Button, Dropdown, type MenuProps, notification } from "antd";
+import EditBlogForm from "@/component/Homepage/EditBlogForm";
+import { Button, Dropdown, type MenuProps, notification, Modal } from "antd";
 import {
   DeleteOutlined,
   SettingOutlined,
