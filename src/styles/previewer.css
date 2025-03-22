@@ -1,0 +1,242 @@
+.article-page {
+  background-color: #fff;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-top: 60px;
+  padding-bottom: 80px;
+}
+
+.text-content {
+  max-width: 80%;
+  width: 100%;;
+  text-align: left;
+  margin: 0 auto;
+}
+
+.visual-content {
+  max-width: 90%;
+  width: 100%;
+  margin: 2rem auto;
+}
+
+.main-title {
+  text-align: center;
+}
+
+.article-page h1 {
+  font-size: 40px;
+  line-height: 52px;
+  color: #000;
+  font-weight: 700;
+  white-space: pre-wrap;
+}
+
+.article-page h2 {
+  font-size: 32px;
+  line-height: 42px;
+  font-weight: 700;
+  color: #000;
+}
+
+.article-page h3 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+  color: #000;
+}
+
+.article-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.article-image img {
+  /* width: 100%; */
+  max-height: 540px;
+  /* height: 100%; */
+}
+
+.article-paragraph {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.article-page a {
+  text-decoration: underline;
+  color: #000;
+}
+
+.article-page a[target="_blank"]::after {
+  height: 1em;
+  width: 1em;
+  content: url("data:image/svg+xml,%3Csvg width='16px' height='16px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Interface / External_Link'%3E%3Cpath id='Vector' d='M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+ul {
+  list-style: revert;
+}
+
+.article-list,
+.check-list {
+  list-style-position: inside;
+}
+
+.article-list li, .check-list li {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+ol li::marker {
+  visibility: hidden;
+  color: transparent;
+}
+
+ul li::marker {
+  color: #000;
+}
+
+.article-page ul li {
+  padding-left: 1rem;
+}
+
+/* Reset counter for the main ordered list */
+.article-page ol {
+  counter-reset: item;
+  list-style: none;
+}
+
+/* Style each list item to increment the counter */
+.article-page ol li {
+  counter-increment: item;
+  position: relative;
+  padding-left: 1.5rem; /* space for the generated counter */
+  margin-left: -0.5rem;
+}
+
+/* Generate the counter using the CSS counters function */
+ol.decimal-list > li::before {
+  content: counters(item, ".", decimal) ". ";
+  margin-right: 0.5rem;
+}
+
+ol.lower-alpha-list > li::before {
+  content: counters(item, ".", lower-alpha) ". ";
+  margin-right: 0.5rem;
+}
+
+ol.upper-alpha-list > li::before {
+  content: counters(item, ".", upper-alpha) ". ";
+  margin-right: 0.5rem;
+}
+
+ol.lower-roman-list > li::before {
+  content: counters(item, ".", lower-roman) ". ";
+  margin-right: 0.5rem;
+}
+
+ol.upper-roman-list > li::before {
+  content: counters(item, ".", upper-roman) ". ";
+  margin-right: 0.5rem;
+}
+
+/* Reset counter for nested ordered lists */
+.article-page ol li > ol {
+  counter-reset: item;
+}
+
+.article-page ul li > ul,
+.article-page ol li > ol {
+  margin: 0;
+}
+
+.article-quote {
+  border-left: 4px solid #000;
+  padding-left: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.article-quote p {
+  font-style: italic;
+  color: #000;
+}
+
+.code-block {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.article-page table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: sans-serif;
+}
+
+.article-page table th,
+.article-page table td {
+  border: 1px solid #ddd;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.article-page table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.article-page table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.article-page table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .article-page {
+    background-color: #000;
+  }
+
+  .header-date {
+    background-image: linear-gradient(to right, #4664ff, #9917ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .header-title {
+    color: #fff;
+  }
+
+  .article-content {
+    color: #fff;
+  }
+
+  .content-author a {
+    color: #fff;
+  }
+
+  .content-introduction {
+    color: #fff;
+  }
+
+  .paragraph-title {
+    color: #fff;
+  }
+
+  .paragraph-text a {
+    color: #fff;
+  }
+
+  .paragraph-text blockquote {
+    color: #fff;
+    border-left: 4px solid #fff;
+  }
+}
