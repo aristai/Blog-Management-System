@@ -34,16 +34,14 @@ export async function POST(req: NextRequest) {
     {
       method: 'POST',
       body: JSON.stringify({
-        tag, content: {
-          blocks: [{
-            id: "1",
-            type: "header",
-            data: {
-              text: "Hello, I am a blog. Start from the title!",
-              level: 1,
-            },
-          },]
-        }
+        tag, content: [{
+          id: "1",
+          type: "header",
+          data: {
+            text: "Hello, I am a blog. Start from the title!",
+            level: 1,
+          },
+        },]
       }),
     }
   );

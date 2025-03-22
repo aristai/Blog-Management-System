@@ -12,7 +12,7 @@ export interface Blog {
   tag: string;
   status: "draft" | "published";
   description: string | null;
-  keywords: string[] | null;
+  keywords: string | null;
   cover_image_url: string | null;
   created_at: string;
   updated_at: string;

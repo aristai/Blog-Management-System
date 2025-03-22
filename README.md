@@ -38,11 +38,12 @@ Inkspire is a modern, open‐source blog management tool built with **Next.js**,
 ## Tech Stack
 
 - **Framework**: [Next.js 13](https://nextjs.org/docs/app) (App Router)  
-- **Language**: TypeScript  
-- **Styling**: Tailwind CSS  
+- **Language**: [TypeScript](https://www.typescriptlang.org/)  
+- **Styling**: [Tailwind CSS 4.0](https://tailwindcss.com/)  
+- **UI**: [Ant Design 5.0](https://ant.design/components/overview/)
 - **Database**: PostgreSQL (hosted on [Neon](https://neon.tech/))  
 - **Storage**: AWS S3 for blog content JSON  
-- **Editor**: Example uses Editor.js (or any Rich Text/Markdown editor of your choice)
+- **Editor**: [Editor.js](https://editorjs.io/)
 
 ---
 

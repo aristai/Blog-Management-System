@@ -22,6 +22,7 @@ const Previewer = () => {
     return <></>;
   }
   const htmlContent = renderEditorJS(data.blocks);
+  console.log(htmlContent);
 
   return (
     <article

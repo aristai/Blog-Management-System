@@ -1,5 +1,8 @@
 "use client";
-import { Button, Dropdown, type MenuProps, Modal, notification } from "antd";
+import dynamic from "next/dynamic";
+const Modal = dynamic(() => import("antd").then((antd) => antd.Modal));
+const EditBlogForm = dynamic(() => import("./EditBlogForm"));
+import { Button, Dropdown, type MenuProps, notification } from "antd";
 import {
   DeleteOutlined,
   SettingOutlined,
@@ -7,11 +10,13 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Blog } from "@/lib/blogType";
 
-const SettingMenu = ({ id }: { id: string }) => {
+const SettingMenu = ({ blog }: { blog: Blog }) => {
   const router = useRouter();
   const [api, contextHolder] = notification.useNotification();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [confirmModal, setConfirmModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleDeleteClick = (e: {
@@ -19,12 +24,12 @@ const SettingMenu = ({ id }: { id: string }) => {
   }) => {
     // Stop event propagation to prevent unwanted side-effects from Dropdown
     e.domEvent.stopPropagation();
-    setIsModalOpen(true);
+    setConfirmModal(true);
   };
 
   const handleOk = async () => {
     setLoading(true);
-    const response = await fetch(`/api/blog/${id}`, {
+    const response = await fetch(`/api/blog/${blog.id}`, {
       method: "DELETE",
     });
     if (response.status !== 200) {
@@ -38,13 +43,13 @@ const SettingMenu = ({ id }: { id: string }) => {
       });
     }
     setLoading(false);
-    setIsModalOpen(false);
+    setConfirmModal(false);
     router.refresh();
   };
 
   const handleCancel = () => {
     console.log("Delete canceled");
-    setIsModalOpen(false);
+    setConfirmModal(false);
   };
 
   const items: MenuProps["items"] = [
@@ -53,7 +58,7 @@ const SettingMenu = ({ id }: { id: string }) => {
       icon: <EditOutlined />,
       key: "0",
       onClick: () => {
-        router.push(`/editor/${id}`);
+        setEditModal(true);
       },
     },
     {
@@ -72,7 +77,7 @@ const SettingMenu = ({ id }: { id: string }) => {
         <Button type="text" icon={<SettingOutlined />} />
       </Dropdown>
       <Modal
-        open={isModalOpen}
+        open={confirmModal}
         title="Confirm Delete"
         onOk={handleOk}
         onCancel={handleCancel}
@@ -83,6 +88,17 @@ const SettingMenu = ({ id }: { id: string }) => {
         loading={loading}
       >
         <p>Are you sure you want to delete this blog?</p>
+      </Modal>{" "}
+      <Modal
+        centered
+        title="Edit Blog Details"
+        footer={null}
+        open={editModal}
+        onCancel={() => setEditModal(false)}
+      >
+        <div className="p-4">
+          <EditBlogForm blog={blog} closeModel={() => setEditModal(false)} />
+        </div>
       </Modal>
     </>
   );
