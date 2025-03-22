@@ -52,7 +52,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   }
 
   const blogContent = JSON.parse(bodyContents);
-  return NextResponse.json({ ...blog[0], ...blogContent }, { status: 200 });
+  console.log("Get data from S3");
+  console.log(blogContent);
+  return NextResponse.json({ ...blog[0], blocks: blogContent }, { status: 200 });
 }
 
 // Update blog content with id to S3

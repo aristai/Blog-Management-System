@@ -10,7 +10,7 @@
 }
 
 .text-content {
-  max-width: 80%;
+  max-width: 860px;
   width: 100%;;
   text-align: left;
   margin: 0 auto;
@@ -32,6 +32,7 @@
   color: #000;
   font-weight: 700;
   white-space: pre-wrap;
+  margin-top: 5rem;
 }
 
 .article-page h2 {
@@ -39,6 +40,7 @@
   line-height: 42px;
   font-weight: 700;
   color: #000;
+  margin-top: 3rem;
 }
 
 .article-page h3 {
@@ -46,6 +48,23 @@
   line-height: 32px;
   font-weight: 700;
   color: #000;
+  margin-top: 3rem;
+}
+
+.article-page h4 {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+  color: #000;
+  margin-top: 2rem;
+}
+
+.article-page h5 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #000;
+  margin-top: 1rem;
 }
 
 .article-image {
