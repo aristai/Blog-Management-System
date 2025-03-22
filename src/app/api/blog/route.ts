@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
   console.log(result);
 
   const uploadResponse = await fetch(
-    process.env.DOMAIN + `/api/blog/${id}`,
+    process.env.NEXT_PUBLIC_DOMAIN + `/api/blog/${id}`,
     {
       method: 'POST',
       body: JSON.stringify({

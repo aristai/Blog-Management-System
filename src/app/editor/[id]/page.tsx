@@ -27,7 +27,7 @@ export default async function EditorPage({
   if (id == "example") {
     blog = DEFAULT_BLOG;
   } else {
-    const blogResponse = await fetch(process.env.DOMAIN + `/api/blog/${id}`);
+    const blogResponse = await fetch(process.env.NEXT_PUBLIC_DOMAIN + `/api/blog/${id}`);
     blog = await blogResponse.json();
   }
   
