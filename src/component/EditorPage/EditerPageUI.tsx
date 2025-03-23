@@ -25,7 +25,12 @@ const EditorPageUI = ({ blog }: { blog: Blog }) => {
   }, [blog, setData]);
 
   return (
-    <Splitter style={{ boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)" }}>
+    <Splitter
+      style={{
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+        padding: "1rem 0 0 0",
+      }}
+    >
       <Splitter.Panel
         defaultSize="40%"
         min="20%"
@@ -38,7 +43,10 @@ const EditorPageUI = ({ blog }: { blog: Blog }) => {
         defaultSize="60%"
         min="30%"
         max="80%"
-        style={{ margin: "0 0 1rem 2rem", padding: "0 0 5rem 0", backgroundColor: "#fff" }}
+        style={{
+          margin: "0 0 1rem 2rem",
+          backgroundColor: "#fff",
+        }}
       >
         <Previewer />
       </Splitter.Panel>

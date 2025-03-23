@@ -52,7 +52,7 @@ const EditorPageHeader = () => {
         </div>
       </div>
 
-      <div className="w-64">
+      <div className="min-w-64 max-w-128">
         <EditableTitle />
       </div>
 

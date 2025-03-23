@@ -75,8 +75,14 @@ export default async function EditorPage({
         <header className="border-b-gray-300 border-b shadow-lg">
           <EditorPageHeader />
         </header>
-        <main className="w-full h-full flex flex-row justify-start gap-10 overflow-hidden mt-4">
-          <EditorPageUI blog={blog} />
+        <main className="w-full h-full flex flex-col gap-4 overflow-hidden mt-4">
+          <div className="mx-48 flex flex-row justify-between items-center">
+            <p className="text-black font-bold text-2xl">Editor Panel</p>
+            <p className="text-black font-bold text-2xl">Preview Panel</p>
+          </div>
+          <div className="flex flex-row justify-start gap-10">
+            <EditorPageUI blog={blog} />
+          </div>
         </main>
       </div>
     </BlogContentProvider>
