@@ -37,6 +37,7 @@ const EditorPageUI = ({ blog }: { blog: Blog }) => {
         max="70%"
         style={{ margin: "0 2rem 1rem 0", backgroundColor: "#fff" }}
       >
+        <p className="text-black font-semibold text-xl w-[calc(100%-16px)] text-center py-2 mx-2 border-b border-gray-300">Editor Panel</p>
         <Editor editorblock="editorjs-container" />
       </Splitter.Panel>
       <Splitter.Panel
@@ -48,6 +49,7 @@ const EditorPageUI = ({ blog }: { blog: Blog }) => {
           backgroundColor: "#fff",
         }}
       >
+        <p className="text-black font-semibold text-xl w-[calc(100%-16px)] text-center py-2 mx-2 border-b border-gray-300">Preview Panel</p>
         <Previewer />
       </Splitter.Panel>
     </Splitter>
