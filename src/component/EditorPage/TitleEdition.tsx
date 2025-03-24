@@ -51,8 +51,8 @@ const EditableTitle = () => {
       {contextHolder}
       <div className="w-full">
         {editing ? (
-          <Space.Compact>
-            <Input value={title} onChange={handleChange} className="w-40" />
+          <Space.Compact className="w-full">
+            <Input value={title} onChange={handleChange} className="w-full" />
             <Button
               icon={<CheckOutlined />}
               type="primary"

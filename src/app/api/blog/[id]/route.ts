@@ -112,9 +112,12 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     cover_image_url: string | null,
   } = await req.json();
 
+
+  console.log(title, author, tag, description, keywords, cover_image_url);
+
   const updated_at = Date.now();
 
-  const result = await sql`UPDATE blogs SET title = ${title}, author = ${author}, tag = ${tag}, description = ${description}, keywords = ${keywords?.join(";")}, cover_image_url = ${cover_image_url}, updated_at = to_timestamp(${updated_at / 1000}) WHERE id = ${id}`;
+  const result = await sql`UPDATE blogs SET title = ${title}, author = ${author}, tag = ${tag}, description = ${description}, keywords = ${keywords}, cover_image_url = ${cover_image_url}, updated_at = to_timestamp(${updated_at / 1000}) WHERE id = ${id}`;
   console.log(result);
 
   return NextResponse.json({ id });
