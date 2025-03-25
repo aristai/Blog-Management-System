@@ -10,7 +10,7 @@ const CreateNewBlogButton = () => {
   return (
     <>
       <button
-        className="w-64 bg-white border-2 border-dashed border-gray-300 rounded-lg
+        className="w-64 h-[300px] justify-self-start bg-white border-2 border-dashed border-gray-300 rounded-lg
              flex flex-col items-center justify-center text-gray-400 hover:bg-gray-100 hover:cursor-pointer"
         onClick={() => setOpenModal(true)}
       >

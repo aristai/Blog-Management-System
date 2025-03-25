@@ -4,13 +4,13 @@ import dynamic from "next/dynamic";
 const Editor = dynamic(() => import("@/component/Editor"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-full bg-gray-300 animate-pulse rounded-md" />
+    <div className="w-full h-full bg-gray-300 animate-pulse rounded-md mx-2" />
   ),
 });
 const Previewer = dynamic(() => import("@/component/Previewer"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-full bg-gray-300 animate-pulse rounded-md" />
+    <div className="w-full h-full bg-gray-300 animate-pulse rounded-md mx-2" />
   ),
 });
 import { Splitter } from "antd";

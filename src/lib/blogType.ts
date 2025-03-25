@@ -264,7 +264,7 @@ export const DEFAULT_BLOG: Blog = {
   tag: "example",
   status: "draft",
   keywords: null,
-  cover_image_url: "https://s3-alpha-sig.figma.com/img/4d6d/099b/786a96cc99325729ea6e40300fed3ab3?Expires=1743379200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=mlnVhE3nQJmXa4XgRIXstO7XTUqLjOeBcdR2tPGjnDwBGg9EAvUOThTyf~AwufMRBQ8mW3~P-dTJUfS0mRGvuv0gwMBw0dymK2XT~85hkQOtkjA6r6VDIGUcGB1bsFAO4L6LFPrv9O1ehq65FHdSKEAQVg~BXcFg2gF2k1MSfJnxUdn2QiPWzm9Wz93yEsNb23eCZqHykoVGGBU6DM7cMPEJ3Fpys~rSAzN8jJWhjpLO0TuYY4P8Rhq-i-lNZyU9bC3OGxoPYlQPIt8qKVyAwCp61qtGPPDQw-ukw4n80b86s2T6aUgVLvM~K~ura~XKzxbo480axFg3mY0Ncy6Hbg__",
+  cover_image_url: "https://d2hp1ftv5ri2om.cloudfront.net/assets/newsroom/images/321e4197-9736-44da-ba1f-eb8cb7d95520.jpg",
   description:
     "This is an example card showing how your blogs will appear once you create them.",
   created_at: "2025-03-19T00:00:00.000Z",

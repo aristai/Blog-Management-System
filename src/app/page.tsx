@@ -43,7 +43,7 @@ export default async function Home() {
           A modern open-source blog management tool designed for seamless
           creation, editing, and publishing.
         </p>
-        <div className="flex flex-wrap gap-6">
+        <div className="flex flex-wrap justify-center gap-6 mx-auto">
           {blogs.map((blog) => (
             <BlogCard key={blog.id} blog={blog} />
           ))}

@@ -24,6 +24,7 @@ const converTime = (time: string) => {
 };
 
 const BlogCard = ({ blog }: BlogCardProps) => {
+  console.log(blog);
   const router = useRouter();
   const [confirmModal, setConfirmModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -92,6 +93,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
         </div>
       </Card>
       <Modal
+        className="my-4"
         open={confirmModal}
         title="Confirm Delete"
         onOk={handleOk}
@@ -103,8 +105,9 @@ const BlogCard = ({ blog }: BlogCardProps) => {
         loading={loading}
       >
         <p>Are you sure you want to delete this blog?</p>
-      </Modal>{" "}
+      </Modal>
       <Modal
+        className="my-4"
         centered
         title="Edit Blog Details"
         footer={null}

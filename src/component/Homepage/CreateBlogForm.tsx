@@ -1,4 +1,14 @@
-import { Form, Input, Select, Button, Spin, notification } from "antd";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  Form,
+  Input,
+  Select,
+  Button,
+  Spin,
+  notification,
+  Upload,
+  type UploadFile,
+} from "antd";
 import type { SelectProps } from "antd";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -12,7 +22,7 @@ type FieldType = {
   tag?: string;
   description?: string;
   keywords?: string[];
-  cover_image_url?: string;
+  cover_image_url?: UploadFile[];
 };
 
 interface CreateBlogFormProps {
@@ -25,14 +35,33 @@ const CreateBlogForm = ({ closeModel }: CreateBlogFormProps) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const normFile = (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList || [];
+  };
+
   const handleSubmit = async (values: FieldType) => {
     setLoading(true);
     console.log(values);
+    if ((values.cover_image_url ?? []).length > 1) {
+      api.error({
+        message: "Please upload only one image",
+      });
+      setLoading(false);
+      return;
+    }  
     const created_at = Date.now();
     const response = await fetch("/api/blog", {
       method: "POST",
       body: JSON.stringify({
-        ...values,
+        title: values.title,
+        author: values.author,
+        tag: values.tag,
+        description: values.description,
+        keywords: values.keywords,
+        cover_image_url: values.cover_image_url?.[0]?.url,
         created_at,
       }),
     });
@@ -104,9 +133,52 @@ const CreateBlogForm = ({ closeModel }: CreateBlogFormProps) => {
             name="cover_image_url"
             layout="vertical"
             tooltip="This image will be used for SEO."
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
             rules={[{ required: false }]}
           >
-            <Input placeholder="Cover image URL for SEO" />
+            <Upload.Dragger
+              name="file"
+              action="/api/uploadFile?source=editorjs" // Your API endpoint for file upload
+              multiple={false}
+              listType="picture"
+              onChange={(info) => {
+                const { status, response } = info.file;
+                if (status !== "uploading") {
+                  console.log(info.file, info.fileList);
+                }
+                if (status === "done") {
+                  api.success({
+                    message: `${info.file.name} file uploaded successfully.`,
+                  });
+                  console.log(response);
+                  if (response && response.success) {
+                    // Update the form field with the returned URL
+                    const url = response.file.url;
+                    form.setFieldsValue({
+                      cover_image_url: [
+                        { id: info.file.uid, url: url, status: "done", name: info.file.name },
+                      ],
+                    });
+                  }
+                } else if (status === "error") {
+                  api.error({
+                    message: `${info.file.name} file upload failed.`,
+                  });
+                }
+              }}
+              onDrop={(e) => {
+                console.log("Dropped files", e.dataTransfer.files);
+              }}
+            >
+              <p className="ant-upload-text">
+                Click or drag file to this area to upload
+              </p>
+              <p className="ant-upload-hint">
+                Support for a single upload. Drag and drop a file or click to
+                select one.
+              </p>
+            </Upload.Dragger>
           </Form.Item>
           <Form.Item label={null}>
             <Button type="primary" htmlType="submit" block>

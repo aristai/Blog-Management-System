@@ -30,9 +30,9 @@ export function renderEditorJS(blocks) {
  */
 function renderTable(data) {
   // data: { withHeadings: boolean, stretched: boolean, content: array of arrays }
-  let html = '<table class="visual-content">';
+  let html = `<table id="${data.id}" class="visual-content">`;
   const rows = data.content;
-  
+
   if (data.withHeadings && rows.length > 0) {
     // Render header row
     html += '<thead><tr>';
@@ -40,7 +40,7 @@ function renderTable(data) {
       html += `<th>${cell}</th>`;
     });
     html += '</tr></thead>';
-    
+
     // Render the rest as tbody rows
     html += '<tbody>';
     for (let i = 1; i < rows.length; i++) {
@@ -63,7 +63,7 @@ function renderTable(data) {
     });
     html += '</tbody>';
   }
-  
+
   html += '</table>';
   return html;
 }
@@ -74,7 +74,7 @@ function renderTable(data) {
  */
 function renderCode(data) {
   const code = data.code || '';
-  return `<pre class="code-block text-content"><code>${code}</code></pre>`;
+  return `<pre id="${data.id}" class="code-block text-content"><code>${code}</code></pre>`;
 }
 
 /**
@@ -84,7 +84,7 @@ function renderCode(data) {
 function renderHeader(data) {
   const level = data.level || 1;
   const text = data.text || '';
-  return `<h${level} class="text-content ${level === 1 ? "main-title": "article-title"}">${text}</h${level}>`;
+  return `<h${level} id="${data.id}" class="text-content ${level === 1 ? "main-title" : "article-title"}">${text}</h${level}>`;
 }
 
 /**
@@ -93,18 +93,22 @@ function renderHeader(data) {
  */
 function renderParagraph(data) {
   // Ensure data.text is sanitized if it comes from user input.
-  return `<p class="text-content article-paragraph">${data.text}</p>`;
+  return `<p id="${data.id}" class="text-content article-paragraph">${data.text}</p>`;
 }
 
 /**
  * Render an image block.
- * @param {Object} data - { url: string, caption?: string, ... }
+ * @param {Object} data - { url: string, caption?: string, stretched?: boolean, withBorder?: boolean, withBackground?: boolean }
  */
 function renderImage(data) {
-  const url = data.url || '';
+  const url = data.file.url || '';
   const caption = data.caption || '';
+  const id = data.id || '';
+  const stretched = data.stretched || false;
+  const withBorder = data.withBorder || false;
+  const withBackground = data.withBackground || false;
   return `
-    <figure class="article-image visual-content">
+    <figure id="${id}" class="article-image visual-content ${stretched ? 'stretched' : ''} ${withBorder ? 'bordered' : ''} ${withBackground ? 'backgrounded' : ''}">
       <img src="${url}" alt="${caption}">
       ${caption ? `<figcaption>${caption}</figcaption>` : ''}
     </figure>
@@ -116,11 +120,12 @@ function renderImage(data) {
  * @param {Object} data - { text: string, caption?: string, alignment?: string }
  */
 function renderQuote(data) {
+  const id = data.id || '';
   const text = data.text || '';
   const caption = data.caption || '';
   const alignment = data.alignment || 'left';
   return `
-    <blockquote class="text-content article-quote" style="text-align: ${alignment};">
+    <blockquote id="${id}" class="text-content article-quote" style="text-align: ${alignment};">
       <p>${text}</p>
       ${caption ? `<cite>${caption}</cite>` : ''}
     </blockquote>
@@ -192,7 +197,7 @@ function renderListItems(items, style, meta = {}) {
   const renderedItems = items
     .map((item) => {
       const nestedItems = item.items && item.items.length
-        ? renderListItems(item.items, style, {counterType: parentType})
+        ? renderListItems(item.items, style, { counterType: parentType })
         : '';
 
       if (style === 'checklist') {

@@ -1,5 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { Form, Input, Select, Button, Spin, notification } from "antd";
+import {
+  Form,
+  Input,
+  Select,
+  Button,
+  Spin,
+  notification,
+  Upload,
+  type UploadFile,
+} from "antd";
 import type { SelectProps } from "antd";
 import React, { useState } from "react";
 import { Blog } from "@/lib/blogType";
@@ -13,7 +23,7 @@ type FieldType = {
   tag?: string;
   description?: string;
   keywords?: string[];
-  cover_image_url?: string;
+  cover_image_url?: UploadFile[];
 };
 
 interface EditBlogFormProps {
@@ -28,12 +38,33 @@ const EditBlogForm = ({ closeModel, blog }: EditBlogFormProps) => {
   const [api, contextHolder] = notification.useNotification();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (values: FieldType) => {
+  const normFile = (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList || [];
+  };
+
+  const handleSubmit = async (values: any) => {
     setLoading(true);
     console.log(values);
+    if ((values.cover_image_url ?? []).length > 1) {
+      api.error({
+        message: "Please upload only one image",
+      });
+      setLoading(false);
+      return;
+    }
     const response = await fetch(`/api/blog/${blog.id}`, {
       method: "PUT",
-      body: JSON.stringify(values),
+      body: JSON.stringify({
+        title: values.title,
+        author: values.author,
+        tag: values.tag,
+        description: values.description,
+        keywords: values.keywords,
+        cover_image_url: values.cover_image_url?.[0]?.url,
+      }),
     });
     if (response.status !== 200) {
       api.error({
@@ -67,7 +98,14 @@ const EditBlogForm = ({ closeModel, blog }: EditBlogFormProps) => {
             description: blog.description,
             // split by ; to convert string to array
             keywords: blog.keywords?.split("; "),
-            cover_image_url: blog.cover_image_url,
+            cover_image_url: [
+              {
+                uid: "1",
+                name: blog.title + "blog cover",
+                status: "done",
+                url: blog.cover_image_url,
+              },
+            ],
           }}
         >
           <Form.Item<FieldType>
@@ -117,11 +155,58 @@ const EditBlogForm = ({ closeModel, blog }: EditBlogFormProps) => {
             name="cover_image_url"
             layout="vertical"
             tooltip="This image will be used for SEO."
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
             rules={[{ required: false }]}
           >
-            <Input placeholder="Cover image URL for SEO" />
+            <Upload.Dragger
+              name="file"
+              action="/api/uploadFile?source=editorjs" // Your API endpoint for file upload
+              listType="picture"
+              multiple={false}
+              onChange={(info) => {
+                const { status, response } = info.file;
+                if (status !== "uploading") {
+                  console.log(info.file, info.fileList);
+                }
+                if (status === "done") {
+                  api.success({
+                    message: `${info.file.name} file uploaded successfully.`,
+                  });
+                  console.log(response);
+                  if (response && response.success) {
+                    // Update the form field with the returned URL
+                    form.setFieldsValue({
+                      cover_image_url: [
+                        {
+                          uid: info.file.uid,
+                          name: info.file.name,
+                          status: "done",
+                          url: response.file.url,
+                        },
+                      ],
+                    });
+                  }
+                } else if (status === "error") {
+                  api.error({
+                    message: `${info.file.name} file upload failed.`,
+                  });
+                }
+              }}
+              onDrop={(e) => {
+                console.log("Dropped files", e.dataTransfer.files);
+              }}
+            >
+              <p className="ant-upload-text">
+                Click or drag file to this area to upload
+              </p>
+              <p className="ant-upload-hint">
+                Support for a single upload. Drag and drop a file or click to
+                select one.
+              </p>
+            </Upload.Dragger>
           </Form.Item>
-          <Form.Item label={null}>
+          <Form.Item<FieldType> label={null}>
             <Button
               type="primary"
               htmlType="submit"
