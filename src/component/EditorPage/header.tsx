@@ -40,7 +40,7 @@ const EditorPageHeader = () => {
           <Image
             src={
               process.env.NEXT_PUBLIC_CDN_URL +
-              "/assets/logos/logo_wiz_emblem.webp"
+              "/assets/logos/logo_wiz_emblem_dark.webp"
             }
             width={128}
             height={33}
