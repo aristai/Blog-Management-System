@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title:
-    "Inkspire | Ignite Your Creativity with a Seamless Blog Management System",
+    "AristAI | Internal Tool for Blog Management",
   description:
-    "Inkspire is a modern, open-source blog management tool designed for writers and publishers. With a live editor, intuitive preview mode, and powerful SEO features, Inkspire makes it easy to craft, organize, and optimize your content for the web.",
+    "This is an internal tool for managing blogs on AristAI.",
 };
 
 export default function RootLayout({

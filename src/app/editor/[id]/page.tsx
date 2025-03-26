@@ -18,7 +18,7 @@ export async function generateMetadata({
 
   // Create a dynamic title and description for SEO
   return {
-    title: `${blog.title} | Inkspire`,
+    title: `${blog.title} | AristAI Blog`,
     description: blog.description,
     // Keywords can be an array or a comma-separated string; Next.js supports both.
     keywords: blog.keywords,

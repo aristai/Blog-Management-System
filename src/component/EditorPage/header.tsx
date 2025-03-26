@@ -37,15 +37,15 @@ const EditorPageHeader = () => {
     <div className="flex items-center justify-between bg-white shadow p-4">
       <div className="flex items-center space-x-4">
         <Link href="/">
-          <div className="flex items-center space-x-2">
-            <Image
-              src="/inkspire.svg"
-              width={40}
-              height={40}
-              alt="Inkspire Logo"
-            />
-            <span className="text-xl font-bold text-gray-800">Inkspire</span>
-          </div>
+          <Image
+            src={
+              process.env.NEXT_PUBLIC_CDN_URL +
+              "/assets/logos/logo_wiz_emblem.webp"
+            }
+            width={128}
+            height={33}
+            alt="AristAI Logo"
+          />
         </Link>
         <div className="w-40">
           <TrackSave />
