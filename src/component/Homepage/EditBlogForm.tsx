@@ -120,13 +120,13 @@ const EditBlogForm = ({ closeModel, blog }: EditBlogFormProps) => {
             <Input placeholder="Author name" />
           </Form.Item>
           <Form.Item<FieldType>
-            label="Tag"
+            label="Tag (news or blog)"
             name="tag"
             layout="vertical"
             tooltip="This tag will be used for blog content storage routing, as a folder name."
-            rules={[{ required: false }]}
+            rules={[{ required: true }]}
           >
-            <Input placeholder="Tag for storage routing" />
+            <Input placeholder="Tag for storage routing; Must be news or blog." />
           </Form.Item>
           <Form.Item<FieldType>
             label="Description"
