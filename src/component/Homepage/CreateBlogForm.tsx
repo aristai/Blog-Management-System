@@ -98,7 +98,7 @@ const CreateBlogForm = ({ closeModel }: CreateBlogFormProps) => {
             <Input placeholder="Author name" />
           </Form.Item>
           <Form.Item<FieldType>
-            label="Tag"
+            label="Tag (news or blog)"
             name="tag"
             layout="vertical"
             tooltip="This tag will be used for blog content storage routing, as a folder name."
