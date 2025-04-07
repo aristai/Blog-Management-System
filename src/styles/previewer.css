@@ -10,7 +10,7 @@
 
 .text-content {
   max-width: 860px;
-  width: 100%;;
+  width: 100%;
   text-align: left;
   margin: 0 auto;
 }
@@ -104,7 +104,8 @@ ul {
   list-style-position: inside;
 }
 
-.article-list li, .check-list li {
+.article-list li,
+.check-list li {
   margin-top: 2px;
   margin-bottom: 2px;
 }
@@ -215,6 +216,24 @@ ol.upper-roman-list > li::before {
 
 .article-page table tbody tr:hover {
   background-color: #f0f0f0;
+}
+
+.article-page .embed-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+  height: 540px;
+  max-width: 993px;
+}
+
+.article-page .embed-block figcaption {
+  font-size: 14px;
+  color: #000;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-style: italic;
 }
 
 @media (prefers-color-scheme: dark) {

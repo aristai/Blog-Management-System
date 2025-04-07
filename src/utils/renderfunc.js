@@ -3,19 +3,21 @@ export function renderEditorJS(blocks) {
     .map((block) => {
       switch (block.type) {
         case 'header':
-          return renderHeader(block.data);
+          return renderHeader(block.data, block.id);
         case 'paragraph':
-          return renderParagraph(block.data);
+          return renderParagraph(block.data, block.id);
         case 'image':
-          return renderImage(block.data);
+          return renderImage(block.data, block.id);
         case 'quote':
-          return renderQuote(block.data);
+          return renderQuote(block.data, block.id);
         case 'list':
           return renderList(block.data);
         case "code":
-          return renderCode(block.data);
+          return renderCode(block.data, block.id);
         case "table":
-          return renderTable(block.data);
+          return renderTable(block.data, block.id);
+        case "embed":
+          return renderEmbed(block.data, block.id);
         default:
           // For unhandled block types, return an empty string or handle as needed
           return '<p>Unsupported block type</p>';
@@ -24,13 +26,34 @@ export function renderEditorJS(blocks) {
     .join('');
 }
 
+/** Render a embed iframe block
+ * @param {Object} data - { caption: string, embed: string, height: string, service: string, source: string, width: string }
+ */
+export function renderEmbed(data, id) {
+  const caption = data.caption || '';
+  const embed = data.embed || '';
+  const height = '100%';
+  const service = data.service || 'other';
+  const width = '100%';
+  if (service !== 'youtube') {
+    return `<p>Unsupported embed service: ${service}</p>`;
+  }
+
+  return `
+    <div id="${id}" class="embed-block visual-content">
+      <iframe src="${embed}" width="${width}" height="${height}" frameborder="0" allowfullscreen></iframe>
+      ${caption ? `<figcaption>${caption}</figcaption>` : ''}
+    </div>
+  `;
+}
+
 /**
  * Render a table block.
  * @param {Object} data - { withHeadings: boolean, stretched: boolean, content: array of arrays }
  */
-function renderTable(data) {
+function renderTable(data, id) {
   // data: { withHeadings: boolean, stretched: boolean, content: array of arrays }
-  let html = `<table id="${data.id}" class="visual-content">`;
+  let html = `<table id="${id}" class="visual-content">`;
   const rows = data.content;
 
   if (data.withHeadings && rows.length > 0) {
@@ -72,38 +95,37 @@ function renderTable(data) {
  * Render a code block.
  * @param {Object} data - { code: string}
  */
-function renderCode(data) {
+function renderCode(data, id) {
   const code = data.code || '';
-  return `<pre id="${data.id}" class="code-block text-content"><code>${code}</code></pre>`;
+  return `<pre id="${id}" class="code-block text-content"><code>${code}</code></pre>`;
 }
 
 /**
  * Render a header block.
  * @param {Object} data - { text: string, level: number }
  */
-function renderHeader(data) {
+function renderHeader(data, id) {
   const level = data.level || 1;
   const text = data.text || '';
-  return `<h${level} id="${data.id}" class="text-content ${level === 1 ? "main-title" : "article-title"}">${text}</h${level}>`;
+  return `<h${level} id="${id}" class="text-content ${level === 1 ? "main-title" : "article-title"}">${text}</h${level}>`;
 }
 
 /**
  * Render a paragraph block.
  * @param {Object} data - { text: string }
  */
-function renderParagraph(data) {
+function renderParagraph(data, id) {
   // Ensure data.text is sanitized if it comes from user input.
-  return `<p id="${data.id}" class="text-content article-paragraph">${data.text}</p>`;
+  return `<p id="${id}" class="text-content article-paragraph">${data.text}</p>`;
 }
 
 /**
  * Render an image block.
  * @param {Object} data - { url: string, caption?: string, stretched?: boolean, withBorder?: boolean, withBackground?: boolean }
  */
-function renderImage(data) {
+function renderImage(data, id) {
   const url = data.file.url || '';
   const caption = data.caption || '';
-  const id = data.id || '';
   const stretched = data.stretched || false;
   const withBorder = data.withBorder || false;
   const withBackground = data.withBackground || false;
@@ -119,8 +141,7 @@ function renderImage(data) {
  * Render a quote block.
  * @param {Object} data - { text: string, caption?: string, alignment?: string }
  */
-function renderQuote(data) {
-  const id = data.id || '';
+function renderQuote(data, id) {
   const text = data.text || '';
   const caption = data.caption || '';
   const alignment = data.alignment || 'left';

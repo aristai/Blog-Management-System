@@ -6,6 +6,7 @@ import RawTool from "@editorjs/raw";
 // import SimpleImage from 'simple-image-editorjs';
 import ImageTool from '@editorjs/image';
 // import InlineImage from 'editorjs-inline-image';
+import Embed from '@editorjs/embed';
 import Quote from '@editorjs/quote';
 import EditorjsList from '@editorjs/list';
 import Table from '@editorjs/table';
@@ -27,5 +28,9 @@ export const EDITOR_JS_TOOLS = {
   quote: Quote,
   list: EditorjsList,
   table: Table,
-  code: CodeTool
+  code: CodeTool,
+  embed: {
+    class: Embed,
+    inlineToolbar: true,
+  }
 };
