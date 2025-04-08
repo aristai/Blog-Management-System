@@ -225,7 +225,7 @@ ol.upper-roman-list > li::before {
   align-items: center;
   margin: 2rem auto;
   height: 540px;
-  max-width: 993px;
+  max-width: 860px;
 }
 
 .article-page .embed-block figcaption {
